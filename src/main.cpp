@@ -104,15 +104,16 @@ int main()
     glViewport(0, 0, w, h);
 
     TriangleMesh* triangle = new TriangleMesh();
-#ifdef WINDOWS
+#ifdef WIN32
     Material* material = new Material("../../img/unicorn-llama.png");
+    Material* mask = new Material("../../img/mask.jpg");
 #else
     Material* material = new Material("../img/unicorn-llama.png");
     Material* mask = new Material("../img/mask.jpg");
 #endif
 
     unsigned int shader = make_shader(
-#ifdef WINDOWS
+#ifdef WIN32
         "../../src/shaders/vertex.vert",
         "../../src/shaders/fragment.frag"
 #else
@@ -126,6 +127,20 @@ int main()
     glUniform1i(glGetUniformLocation(shader, "material"), 0);
     glUniform1i(glGetUniformLocation(shader, "mask"), 1);
 
+    glm::vec3 quad_position = {-0.2f, 0.4f, 0.0f};
+    glm::vec3 camera_position = {-5.0f, 0.0f, 3.0f};
+    glm::vec3 camera_target = {0.0f, 0.0f, 0.0f};
+    glm::vec3 up = {0.0f, 0.0f, 1.0f};
+    unsigned int modelLocation = glGetUniformLocation(shader, "model");
+    unsigned int viewLocation = glGetUniformLocation(shader, "view");
+    unsigned int projLocation = glGetUniformLocation(shader, "projection");
+
+    glm::mat4 view = glm::lookAt(camera_position, camera_target, up);
+    glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+
+    glm::mat4 projection = glm::perspective(45.0f, (float)w / (float)h, 0.1f, 10.0f );
+    glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
     // enable alpha blending
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -133,6 +148,11 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, quad_position);
+        model = glm::rotate(model, (float)glfwGetTime(), {0.0f, 0.0f, 1.0f});
+        glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
 
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(shader);
