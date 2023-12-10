@@ -11,8 +11,11 @@ add_executable(hello_window
     src/config.cpp
     src/main.cpp
     src/glad.c
-    src/triangle_mesh.cpp
-    src/material.cpp
+    src/systems/camera_system.cpp
+    src/systems/motion_system.cpp
+    src/systems/render_system.cpp
+    src/view/shader.cpp
+    src/controller/app.cpp
 )
 
 target_include_directories(hello_window PRIVATE includes)

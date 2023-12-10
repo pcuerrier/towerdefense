@@ -1,5 +1,4 @@
 #pragma once
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -10,7 +9,10 @@
 #include <iostream>
 
 #include <vector>
+#include <unordered_map>
 
 #include <fstream>
 #include <sstream>
 #include <string>
+
+#define ENTITY_ID unsigned int
