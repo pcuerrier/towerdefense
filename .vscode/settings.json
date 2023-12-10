@@ -71,5 +71,6 @@
         "cstdarg": "cpp",
         "functional": "cpp",
         "unordered_map": "cpp"
-    }
+    },
+    "cmake.configureOnOpen": false
 }
