@@ -15,4 +15,6 @@
 #include <sstream>
 #include <string>
 
+std::vector<std::string> split(std::string line, std::string delimiter);
+
 #define ENTITY_ID unsigned int
