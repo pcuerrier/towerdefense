@@ -4,7 +4,9 @@
 
 #include "../entity.h"
 
-#include <unordered_map>
+#include <array>
+#include <set>
+#include <queue>
 
 class EntityManager
 {
@@ -17,10 +19,10 @@ public:
 
     bool isEntityActive(const ENTITY_ID id) const;
 
+    uint32_t getCount() const { return _count; }
+
 private:
-    std::unordered_map<
-    std::unordered_map<uint32_t,1000> _entities {};
+    std::set<ENTITY_ID> _entities {};
+    std::queue<ENTITY_ID> _recycledIDs {};
     uint32_t _count { 0 };
-    // TODO: Recycle ids
-    uint32_t _lastID { 0 };
 };

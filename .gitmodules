@@ -1,3 +1,6 @@
-[submodule "links/glfw"]
-	path = links/glfw
+[submodule "lib/googletest"]
+	path = lib/googletest
+	url = https://github.com/google/googletest.git
+[submodule "lib/glfw"]
+	path = lib/glfw
 	url = https://github.com/glfw/glfw.git
