@@ -1,31 +1,23 @@
 #include "entity_manager.h"
 
-EntityManager::EntityManager()
+ENTITY_ID EntityManager::createEntity()
 {
-
-}
-
-EntityManager::~EntityManager()
-{
-
-}
-
-bool EntityManager::createEntity()
-{
-    if (_count == ENTITY_MAX) { return false; }
+    if (_count == ENTITY_MAX) { return ENTITY_INVALID; }
     // Try to recyle ID
+
+    ENTITY_ID id = ENTITY_INVALID;
+    ++_count;
     if (!_recycledIDs.empty())
     {
-        ENTITY_ID id = _recycledIDs.front();
+        id = _recycledIDs.front();
         _recycledIDs.pop();
-        _entities.insert(id);
-        ++_count;
     }
     else
     {
-        _entities.insert(++_count);
+        id = _count;
     }
-    return true;
+    _entities.insert(id);
+    return id;
 }
 
 void EntityManager::deleteEntity(const ENTITY_ID id)

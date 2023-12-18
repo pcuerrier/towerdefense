@@ -11,14 +11,15 @@
 class EntityManager
 {
 public:
-    EntityManager();
-    ~EntityManager();
+    EntityManager() = default;
+    ~EntityManager() = default;
 
-    bool createEntity();
+    ENTITY_ID createEntity();
     void deleteEntity(const ENTITY_ID id);
 
     bool isEntityActive(const ENTITY_ID id) const;
 
+    // Testing
     uint32_t getCount() const { return _count; }
 
 private:
